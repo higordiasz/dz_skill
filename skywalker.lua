@@ -72,6 +72,16 @@ src = {}
 Tunnel.bindInterface("dz_skill", src)
 vCLIENT = Tunnel.getInterface("dz_skill")
 
+-- ==================== Web Hook =====================--
+
+local webhookSkill = ""
+
+function SendWebhookMessage(webhook,message)
+	if webhook ~= nil and webhook ~= "" then
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
+	end
+end
+
 -- ==================== Functions ====================--
 
 -- Get Levels
@@ -1358,6 +1368,7 @@ end
 -- ================ Commands ===============--
 RegisterCommand('add_exp', function(source, args, rawCommand)
     local user_id = vRP.getUserId(source)
+    local identity = vRP.getUserIdentity(user_id)
     if user_id and src.checkAdmin() then
         if args[1] and parseInt(args[2]) > 0 then
             if args[3] then
@@ -1365,132 +1376,158 @@ RegisterCommand('add_exp', function(source, args, rawCommand)
                 if args[1] == "mechanic" then
                     src.addMechanicExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "steal" then
                     src.addStealExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "athletics" then
                     src.addAthleticsExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "swimming" then
                     src.addSwimmingExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "strenght" then
                     src.addStrenghtExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "shooter" then
                     src.addShooterExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "lung" then
                     src.addLungExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "chemistry" then
                     src.addChemistryExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "agriculture" then
                     src.addAgricultureExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "metallurgy" then
                     src.addMetallurgyExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "sewing" then
                     src.addSewingExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "fishing" then
                     src.addFishingExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
                 if args[1] == "mining" then
                     src.addMiningExp(player, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\n[TARGET]: "..args[3].."\r```")
                     return
                 end
             else
                 if args[1] == "mechanic" then
                     src.addMechanicExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "steal" then
                     src.addStealExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "athletics" then
                     src.addAthleticsExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "swimming" then
                     src.addSwimmingExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "strenght" then
                     src.addStrenghtExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "shooter" then
                     src.addShooterExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "lung" then
                     src.addLungExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "chemistry" then
                     src.addChemistryExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "agriculture" then
                     src.addAgricultureExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "metallurgy" then
                     src.addMetallurgyExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "sewing" then
                     src.addSewingExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "fishing" then
                     src.addFishingExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
                 if args[1] == "mining" then
                     src.addMiningExp(user_id, parseInt(args[2]))
                     TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    SendWebhookMessage(webhookSkill, "```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.." "..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."\n[Skill]:"..args[1].."\n[EXP]: "..args[2].."\r```")
                     return
                 end
             end
