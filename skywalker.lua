@@ -678,7 +678,7 @@ function src.getMiningNextLevelPorcent(id)
 end
 
 -- Add Exp
-function src.addMechanicExp(id, value)
+function src.addMechanicExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -707,7 +707,7 @@ function src.addMechanicExp(id, value)
     end
 end
 
-function src.addStealExp(id)
+function src.addStealExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -736,7 +736,7 @@ function src.addStealExp(id)
     end
 end
 
-function src.addAthleticsExp(id)
+function src.addAthleticsExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -765,7 +765,7 @@ function src.addAthleticsExp(id)
     end
 end
 
-function src.addSwimmingExp(id)
+function src.addSwimmingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -794,7 +794,7 @@ function src.addSwimmingExp(id)
     end
 end
 
-function src.addStrenghtExp(id)
+function src.addStrenghtExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -823,7 +823,7 @@ function src.addStrenghtExp(id)
     end
 end
 
-function src.addShooterExp(id)
+function src.addShooterExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -852,7 +852,7 @@ function src.addShooterExp(id)
     end
 end
 
-function src.addLungExp(id)
+function src.addLungExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -881,7 +881,7 @@ function src.addLungExp(id)
     end
 end
 
-function src.addChemistryExp(id)
+function src.addChemistryExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -910,7 +910,7 @@ function src.addChemistryExp(id)
     end
 end
 
-function src.addAgricultureExp(id)
+function src.addAgricultureExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -939,7 +939,7 @@ function src.addAgricultureExp(id)
     end
 end
 
-function src.addMetallurgyExp(id)
+function src.addMetallurgyExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -968,7 +968,7 @@ function src.addMetallurgyExp(id)
     end
 end
 
-function src.addSewingExp(id)
+function src.addSewingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -997,7 +997,7 @@ function src.addSewingExp(id)
     end
 end
 
-function src.addFishingExp(id)
+function src.addFishingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
             user = id
@@ -1053,6 +1053,13 @@ function src.addMiningExp(id, exp)
     else
         return 0
     end
+end
+
+--checkAdmin
+function src.checkAdmin()
+    local src = source
+    local user_id = vRP.getUserId(src)
+    return vRP.hasPermission(user_id, "admin.permissao")
 end
 
 -- ================ Internal Functions ===============--
@@ -1271,6 +1278,7 @@ function updateLevel(currentLevel, exp, skill, id)
                 lvl = lvel,
                 user_id = id
             })
+            TriggerClientEvent("dz_skill:speedChance", source)
             return true
         end
         if skill == "swimming" then
@@ -1346,6 +1354,150 @@ function updateLevel(currentLevel, exp, skill, id)
         return false;
     end
 end
+
+-- ================ Commands ===============--
+RegisterCommand('add_exp', function(source, args, rawCommand)
+    local user_id = vRP.getUserId(source)
+    if user_id and src.checkAdmin() then
+        if args[1] and parseInt(args[2]) > 0 then
+            if args[3] then
+                local player = args[3]
+                if args[1] == "mechanic" then
+                    src.addMechanicExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "steal" then
+                    src.addStealExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "athletics" then
+                    src.addAthleticsExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "swimming" then
+                    src.addSwimmingExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "strenght" then
+                    src.addStrenghtExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "shooter" then
+                    src.addShooterExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "lung" then
+                    src.addLungExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "chemistry" then
+                    src.addChemistryExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "agriculture" then
+                    src.addAgricultureExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "metallurgy" then
+                    src.addMetallurgyExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "sewing" then
+                    src.addSewingExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "fishing" then
+                    src.addFishingExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "mining" then
+                    src.addMiningExp(player, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+            else
+                if args[1] == "mechanic" then
+                    src.addMechanicExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "steal" then
+                    src.addStealExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "athletics" then
+                    src.addAthleticsExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "swimming" then
+                    src.addSwimmingExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "strenght" then
+                    src.addStrenghtExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "shooter" then
+                    src.addShooterExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "lung" then
+                    src.addLungExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "chemistry" then
+                    src.addChemistryExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "agriculture" then
+                    src.addAgricultureExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "metallurgy" then
+                    src.addMetallurgyExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "sewing" then
+                    src.addSewingExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "fishing" then
+                    src.addFishingExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+                if args[1] == "mining" then
+                    src.addMiningExp(user_id, parseInt(args[2]))
+                    TriggerClientEvent("Notify",source,"Você adicionou <b>"..args[2].."</b> a habilidade <b>"..args[1].."</b>")
+                    return
+                end
+            end
+        end
+    end
+end)
+
 
 -- Up to 2 need = 100Exp
 -- Up to 3 need = 300Exp / 200
