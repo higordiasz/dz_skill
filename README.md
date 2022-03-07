@@ -1,0 +1,1 @@
+FiveM skill script
