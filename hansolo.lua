@@ -35,33 +35,37 @@ end
 
 Citizen.CreateThread(function()
     local ped = PlayerPedId()
-    local level = vSERVER.getAthleticsLevel(ped)
-    if level == 2 then
-        SetRunSprintMultiplierForPlayer(ped, 1.03)
-    else
-        if level == 3 then
-            SetRunSprintMultiplierForPlayer(ped, 1.08)
+    local id = vSERVER.getPlayerId()
+    Citizen.Wait(2000)
+    if vSERVER.checkSkillDb(id) then
+        local level = vSERVER.getAthleticsLevel(id)
+        if level == 2 then
+            SetRunSprintMultiplierForPlayer(ped, 1.03)
         else
-            if level == 4 then
-                SetRunSprintMultiplierForPlayer(ped, 1.12)
+            if level == 3 then
+                SetRunSprintMultiplierForPlayer(ped, 1.08)
             else
-                if level == 5 then
-                    SetRunSprintMultiplierForPlayer(ped, 1.15)
+                if level == 4 then
+                    SetRunSprintMultiplierForPlayer(ped, 1.12)
                 else
-                    if level == 6 then
-                        SetRunSprintMultiplierForPlayer(ped, 1.17)
+                    if level == 5 then
+                        SetRunSprintMultiplierForPlayer(ped, 1.15)
                     else
-                        if level == 7 then
-                            SetRunSprintMultiplierForPlayer(ped, 1.18)
+                        if level == 6 then
+                            SetRunSprintMultiplierForPlayer(ped, 1.17)
                         else
-                            if level == 8 then
-                                SetRunSprintMultiplierForPlayer(ped, 1.19)
+                            if level == 7 then
+                                SetRunSprintMultiplierForPlayer(ped, 1.18)
                             else
-                                if level == 9 then
-                                    SetRunSprintMultiplierForPlayer(ped, 1.24)
+                                if level == 8 then
+                                    SetRunSprintMultiplierForPlayer(ped, 1.19)
                                 else
-                                    if level == 10 then
-                                        SetRunSprintMultiplierForPlayer(ped, 1.29)
+                                    if level == 9 then
+                                        SetRunSprintMultiplierForPlayer(ped, 1.24)
+                                    else
+                                        if level == 10 then
+                                            SetRunSprintMultiplierForPlayer(ped, 1.29)
+                                        end
                                     end
                                 end
                             end
@@ -76,7 +80,8 @@ end)
 RegisterNetEvent("dz_skill:speedChance")
 AddEventHandler("dz_skill:speedChance", function ()
     local ped = PlayerPedId()
-    local level = vSERVER.getAthleticsLevel(ped)
+    local id = vSERVER.getPlayerId()
+    local level = vSERVER.getAthleticsLevel(id)
     if level == 2 then
         SetRunSprintMultiplierForPlayer(ped, 1.03)
     else
@@ -117,34 +122,39 @@ end)
 -- ==================== Swim ====================--
 
 Citizen.CreateThread(function()
+    Citizen.Wait(2000)
     local ped = PlayerPedId()
-    local level = vSERVER.getSwimmingLevel(ped)
-    if level == 2 then
-        SetSwimMultiplierForPlayer(ped, 1.03)
-    else
-        if level == 3 then
-            SetSwimMultiplierForPlayer(ped, 1.08)
+    local id = vSERVER.getPlayerId()
+    print(vSERVER.checkSkillDb(id))
+    if vSERVER.checkSkillDb(id) then
+    local level = vSERVER.getSwimmingLevel(id)
+        if level == 2 then
+            SetSwimMultiplierForPlayer(ped, 1.03)
         else
-            if level == 4 then
-                SetSwimMultiplierForPlayer(ped, 1.12)
+            if level == 3 then
+                SetSwimMultiplierForPlayer(ped, 1.08)
             else
-                if level == 5 then
-                    SetSwimMultiplierForPlayer(ped, 1.15)
+                if level == 4 then
+                    SetSwimMultiplierForPlayer(ped, 1.12)
                 else
-                    if level == 6 then
-                        SetSwimMultiplierForPlayer(ped, 1.17)
+                    if level == 5 then
+                        SetSwimMultiplierForPlayer(ped, 1.15)
                     else
-                        if level == 7 then
-                            SetSwimMultiplierForPlayer(ped, 1.18)
+                        if level == 6 then
+                            SetSwimMultiplierForPlayer(ped, 1.17)
                         else
-                            if level == 8 then
-                                SetSwimMultiplierForPlayer(ped, 1.19)
+                            if level == 7 then
+                                SetSwimMultiplierForPlayer(ped, 1.18)
                             else
-                                if level == 9 then
-                                    SetSwimMultiplierForPlayer(ped, 1.24)
+                                if level == 8 then
+                                    SetSwimMultiplierForPlayer(ped, 1.19)
                                 else
-                                    if level == 10 then
-                                        SetSwimMultiplierForPlayer(ped, 1.29)
+                                    if level == 9 then
+                                        SetSwimMultiplierForPlayer(ped, 1.24)
+                                    else
+                                        if level == 10 then
+                                            SetSwimMultiplierForPlayer(ped, 1.29)
+                                        end
                                     end
                                 end
                             end
@@ -159,7 +169,8 @@ end)
 RegisterNetEvent("dz_skill:swimChance")
 AddEventHandler("dz_skill:swimChance", function ()
     local ped = PlayerPedId()
-    local level = vSERVER.getSwimmingLevel(ped)
+    local id = vSERVER.getPlayerId()
+    local level = vSERVER.getSwimmingLevel(id)
     if level == 2 then
         SetSwimMultiplierForPlayer(ped, 1.03)
     else
@@ -201,18 +212,23 @@ end)
 
 Citizen.CreateThread(function ()
     local ped = PlayerPedId()
+    local id = PlayerId()
     while true do
         if IsPedSwimming(ped) then
-            vSERVER.addSwimmingExp(ped, 2)
+            print("swing")
+            vSERVER.addSwimmingExp(id, 2)
         end
         if IsPedSwimmingUnderWater(ped) then
-            vSERVER.addLungExp(ped, 2)
+            print("swingunderwater")
+            vSERVER.addLungExp(id, 2)
         end
         if IsPedRunning(ped) then
-            vSERVER.addAthletcsExp(ped, 1)
+            print("runnin")
+            vSERVER.addAthletcsExp(id, 1)
         end
         if IsPedInMeleeCombat(ped) then
-            vSERVER.addStrenghtExp(ped, 2)
+            print("melee")
+            vSERVER.addStrenghtExp(id, 2)
         end
         Citizen.Wait(5000)
     end
