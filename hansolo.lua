@@ -14,12 +14,38 @@ vSERVER = Tunnel.getInterface("dz_skill")
 -- Open Nui
 local menuEnabled = false
 
-function openMenu()
+function nuiAction()
     menuEnabled = not menuEnabled
     if menuEnabled then
         SetNuiFocus(true, true)
         SendNUIMessage({
-            action = "showMenu"
+            action = "showMenu",
+            mechanic_lvl = 1,
+            mechanic_porcent = 1,
+            steal_lvl = 1,
+            steal_porcent = 1,
+            athletics_lvl = 1,
+            athletics_porcent = 1,
+            swimming_lvl = 1,
+            swimming_porcent = 1,
+            strenght_lvl = 1,
+            strenght_porcent = 1,
+            shooter_lvl = 1,
+            shooter_porcent = 1,
+            lung_lvl = 1,
+            lung_porcent = 1,
+            chemistry_lvl = 1,
+            chemistry_porcent = 1,
+            agriculture_lvl = 1,
+            agriculture_porcent = 1,
+            metallurgy_lvl = 1,
+            metallurgy_porcent = 1,
+            sewing_lvl = 1,
+            sewing_porcent = 1,
+            fishing_lvl = 1,
+            fishing_porcent = 1,
+            mining_lvl = 1,
+            mining_porcent = 1
         })
     else
         SetNuiFocus(false, false)
@@ -29,7 +55,18 @@ function openMenu()
     end
 end
 
+--NUI Callback
+RegisterNUICallback("ButtonClick",function(data,cb)
+	if data == "fechar" then
+		nuiAction()
+	end
+end)
+
 -- ==================== Commands ====================--
+
+RegisterCommand('skill', function() 
+    nuiAction();
+end)
 
 -- ==================== Speed ====================--
 

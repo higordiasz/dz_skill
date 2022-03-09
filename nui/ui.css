@@ -1,0 +1,183 @@
+:root{
+    --mechaical_porcent: 10%;
+    --steal_porcent: 10%;
+    --athletics_porcent: 10%;
+    --swimming_porcent: 10%;
+    --strenght_porcent: 10%;
+    --shooter_porcent: 10%;
+    --lung_porcent: 10%;
+    --chemistry_porcent: 10%;
+    --agriculture_porcent: 10%;
+    --metallurgy_porcent: 10%;
+    --sewing_porcent: 10%;
+    --fishing_porcent: 10%;
+    --mining_porcent: 10%;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+  height:100vh;
+}
+.wrapper{
+    width: 40%;
+    min-width: 590px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.container{
+    width: 100%;
+    padding: 15px 15px 25px;
+    background-color: #f0f1fa;
+    border: 2px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+} 
+.container *{
+    font-family: "Poppins",sans-serif;
+    color: black;
+    font-weight: 100;
+    font-size: 12px;
+}
+h2{
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+    font-size: 18px !important;
+    font-weight: bold;
+}
+.skills:not(:last-child){
+    margin-bottom: 10px;
+}
+.details{
+    width: 100%;
+    display: flex;  
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.bar{
+    position: relative;
+ 
+    border: 2px solid #221154;
+ 
+    border-radius: 20px;
+  
+}
+.bar div{
+    position: relative;
+    width: 0;
+    height: 9px;
+    border-radius: 10px;
+    background-color: #221154;
+   
+ 
+}
+#agricultura-bar{
+    animation: agricultura-fill 2s forwards;
+}
+@keyframes agricultura-fill{
+    100%{
+        width: var(--agriculture_porcent);
+    }
+}
+#atirar-bar{
+    animation: atirar-fill 2s forwards;
+}
+@keyframes atirar-fill{
+    100%{
+        width: var(--shooter_porcent);
+    }
+}
+#atletismo-bar{
+    animation: atletismo-fill 2s forwards;
+}
+@keyframes atletismo-fill {
+    100%{
+        width: var(--athletics_porcent);
+    }
+}
+#costura-bar{
+    animation: costura-fill 2s forwards;
+}
+@keyframes costura-fill{
+    100%{
+        width: var(--sewing_porcent);
+    }
+}
+#forca-bar{
+    animation: forca-fill 2s forwards;
+}
+@keyframes forca-fill{
+    100%{
+        width: var(--strenght_porcent);
+    }
+}
+#mecanica-bar{
+    animation: mecanica-fill 2s forwards;
+}
+@keyframes mecanica-fill{
+    100%{
+        width: var(--mechaical_porcent);
+    }
+}
+#metalurgia-bar{
+    animation: metalurgia-fill 2s forwards;
+}
+@keyframes metalurgia-fill{
+    100%{
+        width: var(--metallurgy_porcent);
+    }
+}
+#mineracao-bar{
+    animation: mineracao-fill 2s forwards;
+}
+@keyframes mineracao-fill{
+    100%{
+        width: var(--mining_porcent);
+    }
+}
+#natacao-bar{
+    animation: natacao-fill 2s forwards;
+}
+@keyframes natacao-fill{
+    100%{
+        width: var(--swimming_porcent);
+    }
+}
+#pescaria-bar{
+    animation: pescaria-fill 2s forwards;
+}
+@keyframes pescaria-fill{
+    100%{
+        width: var(--fishing_porcent);
+    }
+}
+#pulmao-bar{
+    animation: pulmao-fill 2s forwards;
+}
+@keyframes pulmao-fill{
+    100%{
+        width: var(--lung_porcent);
+    }
+}
+#quimica-bar{
+    animation: quimica-fill 2s forwards;
+}
+@keyframes quimica-fill{
+    100%{
+        width: var(--chemistry_porcent);
+    }
+}
+#roubo-bar{
+    animation: roubo-fill 2s forwards;
+}
+@keyframes roubo-fill{
+    100%{
+        width: var(--steal_porcent);
+    }
+}
