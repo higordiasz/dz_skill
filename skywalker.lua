@@ -1,12 +1,13 @@
 -- =============== vRP Variables ================--
-local Tunnel = module("vrp", "lib/Tunnel")
-local Proxy = module("vrp", "lib/Proxy")
+local Tunnel = module("vrp","lib/Tunnel")
+local Proxy = module("vrp","lib/Proxy")
+local Tools = module("vrp","lib/Tools")
 vRP = Proxy.getInterface("vRP")
 vRPclient = Tunnel.getInterface("vRP")
 
 -- =================== SQL CONNECT ===================--
 
-vRP._prepare("creative/get_skill_level", "SELECT * FROM dz_skill WHERE user_id = @user")
+vRP._prepare("creative/get_skill_level", "SELECT * FROM dz_skill WHERE user_id = @user_id")
 vRP._prepare("creative/add_exp_mechanic",
     "UPDATE dz_skill SET mechanic_exp = mechanic_exp + @value WHERE user_id = @user_id")
 vRP._prepare("creative/add_lvl_mechanic",
@@ -84,11 +85,34 @@ end
 
 -- ==================== Functions ====================--
 
+function src.checkSkillDb(user_id)
+    if user_id then
+        local query = vRP.execute("creative/get_skill_level",{ user_id = parseInt(user_id) })
+        print(query)
+        if query ~= -1 then
+            if query[1] then
+                if query[1].id > 0 then
+                    return true
+                end
+                addNewPlayer(user_id)
+                return false
+            end
+            addNewPlayer(user_id)
+            return false
+        else
+            addNewPlayer(user_id)
+            return false
+        end
+    else
+        return false
+    end
+end
+
 -- Get Levels
 function src.getSkillsLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1]
@@ -103,7 +127,7 @@ end
 function src.getMechanicLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].mechanic_lvl
@@ -118,7 +142,7 @@ end
 function src.getStealLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].steal_lvl
@@ -133,7 +157,7 @@ end
 function src.getAthleticsLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].athletics_lvl
@@ -148,7 +172,7 @@ end
 function src.getSwimmingLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].swimming_lvl
@@ -163,7 +187,7 @@ end
 function src.getStrenghtLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].strenght_lvl
@@ -178,7 +202,7 @@ end
 function src.getShooterLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].shooter_lvl
@@ -193,7 +217,7 @@ end
 function src.getLungLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].lung_lvl
@@ -208,7 +232,7 @@ end
 function src.getChemistryLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].chemistry_lvl
@@ -223,7 +247,7 @@ end
 function src.getAgricultureLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].agriculture_lvl
@@ -238,7 +262,7 @@ end
 function src.getMetallurgyLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].metallurgy_lvl
@@ -253,7 +277,7 @@ end
 function src.getSewingLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].sewing_lvl
@@ -283,7 +307,7 @@ end
 function src.getMiningLevel(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].mining_lvl
@@ -299,7 +323,7 @@ end
 function src.getMechanicExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].mechanic_exp
@@ -314,7 +338,7 @@ end
 function src.getStealExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].steal_exp
@@ -329,7 +353,7 @@ end
 function src.getAthleticsExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].athletics_exp
@@ -344,7 +368,7 @@ end
 function src.getSwimmingExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].swimming_exp
@@ -359,7 +383,7 @@ end
 function src.getStrenghtExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].strenght_exp
@@ -374,7 +398,7 @@ end
 function src.getShooterExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].shooter_exp
@@ -389,7 +413,7 @@ end
 function src.getLungExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].lung_exp
@@ -404,7 +428,7 @@ end
 function src.getChemistryExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].chemistry_exp
@@ -419,7 +443,7 @@ end
 function src.getAgricultureExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].agriculture_exp
@@ -434,7 +458,7 @@ end
 function src.getMetallurgyExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].metallurgy_exp
@@ -449,7 +473,7 @@ end
 function src.getSewingExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].sewing_exp
@@ -464,7 +488,7 @@ end
 function src.getFishingExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].fishing_exp
@@ -479,7 +503,7 @@ end
 function src.getMiningExp(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return query[1].mining_exp
@@ -495,7 +519,7 @@ end
 function src.getMechanicNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].mechanic_exp)
@@ -510,7 +534,7 @@ end
 function src.getStealNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].steal_exp)
@@ -525,7 +549,7 @@ end
 function src.getAthleticsNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].athletics_exp)
@@ -540,7 +564,7 @@ end
 function src.getSwimmingNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].swimming_exp)
@@ -555,7 +579,7 @@ end
 function src.getStrenghtNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].strenght_exp)
@@ -570,7 +594,7 @@ end
 function src.getShooterNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].shooter_exp)
@@ -585,7 +609,7 @@ end
 function src.getLungNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].lung_exp)
@@ -600,7 +624,7 @@ end
 function src.getChemistryNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].chemistry_exp)
@@ -615,7 +639,7 @@ end
 function src.getAgricultureNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].agriculture_exp)
@@ -630,7 +654,7 @@ end
 function src.getMetallurgyNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].metallurgy_exp)
@@ -645,7 +669,7 @@ end
 function src.getSewingNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].sewing_exp)
@@ -660,7 +684,7 @@ end
 function src.getFishingNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].fishing_exp)
@@ -675,7 +699,7 @@ end
 function src.getMiningNextLevelPorcent(id)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             return getPorcentForNextLevel(query[1].mining_exp)
@@ -691,7 +715,7 @@ end
 function src.addMechanicExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_mechanic", {
@@ -720,7 +744,7 @@ end
 function src.addStealExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_steal", {
@@ -749,7 +773,7 @@ end
 function src.addAthleticsExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_athletics", {
@@ -778,7 +802,7 @@ end
 function src.addSwimmingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_swimming", {
@@ -807,7 +831,7 @@ end
 function src.addStrenghtExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_strenght", {
@@ -836,7 +860,7 @@ end
 function src.addShooterExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_shooter", {
@@ -865,7 +889,7 @@ end
 function src.addLungExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_lung", {
@@ -894,7 +918,7 @@ end
 function src.addChemistryExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_chemistry", {
@@ -923,7 +947,7 @@ end
 function src.addAgricultureExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_agriculture", {
@@ -952,7 +976,7 @@ end
 function src.addMetallurgyExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_metallurgy", {
@@ -981,7 +1005,7 @@ end
 function src.addSewingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_sewing", {
@@ -1010,7 +1034,7 @@ end
 function src.addFishingExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_fishing", {
@@ -1039,7 +1063,7 @@ end
 function src.addMiningExp(id, exp)
     if id then
         local query = vRP.execute("creative/get_skill_level", {
-            user = id
+            user_id = id
         })
         if query and query[1] and query[1].id > 0 then
             vRP.execute("creative/add_exp_mining", {
@@ -1067,9 +1091,13 @@ end
 
 --checkAdmin
 function src.checkAdmin()
-    local src = source
-    local user_id = vRP.getUserId(src)
+    local src2 = source
+    local user_id = vRP.getUserId(src2)
     return vRP.hasPermission(user_id, "admin.permissao")
+end
+
+function src.getPlayerId()
+    return vRP.getUserId(source)
 end
 
 -- ================ Internal Functions ===============--
@@ -1248,12 +1276,12 @@ function getPorcentForNextLevel(exp)
     end
 end
 
-function addNewPlayer(id)
+function addNewPlayer(user_id)
     if id then
-        local query = vRP.execute("creative/get_skill_level", {
-            user_id = id
-        })
-        if query and query[1] and query[1].id > 0 then
+        local query = vRP.execute("creative/get_skill_level",{ user_id = parseInt(user_id) })
+        print("oi")
+        print(query)
+        if query and query ~= -1 and query[1] and query[1].id > 0 then
             return true
         else
             vRP.execute("creative/add_new_player", {
@@ -1296,6 +1324,7 @@ function updateLevel(currentLevel, exp, skill, id)
                 lvl = lvel,
                 user_id = id
             })
+            TriggerClientEvent("dz_skill:swimChance", source)
             return true
         end
         if skill == "strenght" then
@@ -1369,7 +1398,7 @@ end
 RegisterCommand('add_exp', function(source, args, rawCommand)
     local user_id = vRP.getUserId(source)
     local identity = vRP.getUserIdentity(user_id)
-    if user_id and src.checkAdmin() then
+    if vRP.hasPermission(user_id, "admin.permissao") then
         if args[1] and parseInt(args[2]) > 0 then
             if args[3] then
                 local player = args[3]
