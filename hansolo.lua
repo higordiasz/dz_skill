@@ -17,35 +17,50 @@ local menuEnabled = false
 function nuiAction()
     menuEnabled = not menuEnabled
     if menuEnabled then
+        local id = vSERVER.getPlayerId()
+        local skill = vSERVER.getSkillsLevel()
+        local mechanic_porcent = vSERVER.getMechanicNextLevelPorcent()
+        local steal_porcent = vSERVER.getStealNextLevelPorcent()
+        local athletics_porcent = vSERVER.getAthleticsNextLevelPorcent()
+        local swimming_porcent = vSERVER.getSwimmingNextLevelPorcent()
+        local strenght_porcent = vSERVER.getStrenghtNextLevelPorcent()
+        local shooter_porcent = vSERVER.getShooterNextLevelPorcent()
+        local lung_porcent = vSERVER.getLungNextLevelPorcent()
+        local chemistry_porcent = vSERVER.getChemistryNextLevelPorcent()
+        local agriculture_porcent = vSERVER.getAgricultureNextLevelPorcent()
+        local metallurgy_porcent = vSERVER.getMetallurgyNextLevelPorcent()
+        local sewing_porcent = vSERVER.getSewingNextLevelPorcent()
+        local fishing_porcent = vSERVER.getFishingNextLevelPorcent()
+        local mining_porcent = vSERVER.getMiningNextLevelPorcent()
         SetNuiFocus(true, true)
         SendNUIMessage({
             action = "showMenu",
-            mechanic_lvl = 1,
-            mechanic_porcent = 1,
-            steal_lvl = 1,
-            steal_porcent = 1,
-            athletics_lvl = 1,
-            athletics_porcent = 1,
-            swimming_lvl = 1,
-            swimming_porcent = 1,
-            strenght_lvl = 1,
-            strenght_porcent = 1,
-            shooter_lvl = 1,
-            shooter_porcent = 1,
-            lung_lvl = 1,
-            lung_porcent = 1,
-            chemistry_lvl = 1,
-            chemistry_porcent = 1,
-            agriculture_lvl = 1,
-            agriculture_porcent = 1,
-            metallurgy_lvl = 1,
-            metallurgy_porcent = 1,
-            sewing_lvl = 1,
-            sewing_porcent = 1,
-            fishing_lvl = 1,
-            fishing_porcent = 1,
-            mining_lvl = 1,
-            mining_porcent = 1
+            mechanic_lvl = skill.mechanic_lvl,
+            mechanic_porcent = mechanic_porcent,
+            steal_lvl = skill.steal_lvl,
+            steal_porcent = steal_porcent,
+            athletics_lvl = skill.athletics_lvl,
+            athletics_porcent = athletics_porcent,
+            swimming_lvl = skill.swimming_lvl,
+            swimming_porcent = swimming_porcent,
+            strenght_lvl = skill.strenght_lvl,
+            strenght_porcent = strenght_porcent,
+            shooter_lvl = skill.shooter_lvl,
+            shooter_porcent = shooter_porcent,
+            lung_lvl = skill.lung_lvl,
+            lung_porcent = lung_porcent,
+            chemistry_lvl = skill.chemistry_lvl,
+            chemistry_porcent = chemistry_porcent,
+            agriculture_lvl = skill.agriculture_lvl,
+            agriculture_porcent = agriculture_porcent,
+            metallurgy_lvl = skill.metallurgy_lvl,
+            metallurgy_porcent = metallurgy_porcent,
+            sewing_lvl = skill.sewing_lvl,
+            sewing_porcent = sewing_porcent,
+            fishing_lvl = skill.fishing_lvl,
+            fishing_porcent = fishing_porcent,
+            mining_lvl = skill.mining_lvl,
+            mining_porcent = mining_porcent
         })
     else
         SetNuiFocus(false, false)
